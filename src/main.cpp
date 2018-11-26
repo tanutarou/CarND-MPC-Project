@@ -36,7 +36,7 @@ string hasData(string s) {
 // Evaluate a polynomial.
 double polyeval(Eigen::VectorXd coeffs, double x) {
   double result = 0.0;
-  for (int i = 0; i < coeffs.size(); i++) {
+  for (auto i = 0; i < coeffs.size(); i++) {
     result += coeffs[i] * pow(x, i);
   }
   return result;
@@ -51,12 +51,12 @@ Eigen::VectorXd polyfit(Eigen::VectorXd xvals, Eigen::VectorXd yvals,
   assert(order >= 1 && order <= xvals.size() - 1);
   Eigen::MatrixXd A(xvals.size(), order + 1);
 
-  for (int i = 0; i < xvals.size(); i++) {
+  for (auto i = 0; i < xvals.size(); i++) {
     A(i, 0) = 1.0;
   }
 
-  for (int j = 0; j < xvals.size(); j++) {
-    for (int i = 0; i < order; i++) {
+  for (auto j = 0; j < xvals.size(); j++) {
+    for (auto i = 0; i < order; i++) {
       A(j, i + 1) = A(j, i) * xvals(j);
     }
   }
@@ -105,7 +105,7 @@ int main() {
           size_t n_pts = ptsx.size();
           auto ptsx_car = Eigen::VectorXd(n_pts);
           auto ptsy_car = Eigen::VectorXd(n_pts);
-          for(auto i=0; i < n_pts; i++){
+          for(size_t i=0; i < n_pts; i++){
               double dx = ptsx[i] - px;
               double dy = ptsy[i] - py;
               // use rotate matrix to be car's psi = 0
@@ -114,7 +114,6 @@ int main() {
           }
 
           auto coeffs = polyfit(ptsx_car, ptsy_car, 3);
-          const auto delay = 0.1;
 
           const double x0 = 0;
           const double y0 = 0;
@@ -143,10 +142,10 @@ int main() {
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Green line
           auto n_x_vals = result.size()/2-1;
-          for(auto i=0; i<n_x_vals; i++){
+          for(size_t i=0; i<n_x_vals; i++){
               mpc_x_vals.push_back(result[2+i]);
           }
-          for(auto i=0; i<n_x_vals; i++){
+          for(size_t i=0; i<n_x_vals; i++){
               mpc_y_vals.push_back(result[2+n_x_vals+i]);
           }
 
@@ -160,7 +159,7 @@ int main() {
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Yellow line
 
-          for ( int i = 0; i < 50; i++ ) {
+          for ( auto i = 0; i < 50; i++ ) {
             double x = 4*i;
             next_x_vals.push_back( x );
             next_y_vals.push_back( polyeval(coeffs, x) );
