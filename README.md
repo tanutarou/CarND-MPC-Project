@@ -3,6 +3,58 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Rubic points
+### The Model
+I used the kinematic model. Its update equation are shown as below.
+
+<img src="https://latex.codecogs.com/svg.latex?x_{t&plus;1}&space;=&space;x_t&space;&plus;&space;v_t&space;\cos(\psi_t)&space;dt">
+
+<img src="https://latex.codecogs.com/svg.latex?y_{t&plus;1}&space;=&space;y_t&space;&plus;&space;v_t&space;\sin(\psi_t)&space;dt">
+
+<img src="https://latex.codecogs.com/svg.latex?\psi_{t&plus;1}&space;=&space;\psi_t&space;&plus;&space;\frac{v_t}{L_f}&space;\delta_t&space;dt">
+
+<img src="https://latex.codecogs.com/svg.latex?v_{t&plus;1}&space;=&space;v_t&space;&plus;&space;a_t&space;dt">
+
+<img src="https://latex.codecogs.com/svg.latex?cte_{t&plus;1}&space;=&space;f(x_t)&space;-&space;y_t&space;&plus;&space;v_t&space;sin(e\psi_t)&space;dt">
+
+<img src="https://latex.codecogs.com/svg.latex?e\psi_{t&plus;1}&space;=&space;\psi_t&space;-&space;\psi&space;des_t&space;&plus;&space;\frac{v_t}{L_f}\delta_t&space;dt">
+
+States are shown as below table.
+
+variable|meaning|
+--------|-------|
+x|x-position of the car|
+y|y-position of the car|
+<img src="https://latex.codecogs.com/svg.latex?\psi">| heading direction|
+v| velocity of the car|
+
+
+Actuators are shown as below table.
+
+variable|meaning|
+--------|-------|
+a | throttle|
+<img src="https://latex.codecogs.com/svg.latex?\delta"> | steering angle|
+
+Meaning of other variables are shown as below.
+
+variable|meaning|
+--------|-------|
+cte | cross track error|
+<img src="https://latex.codecogs.com/svg.latex?e\psi"> | heading direction error|
+<img src="https://latex.codecogs.com/svg.latex?\psi&space;des"> | destination value of heading direction|
+<img src="https://latex.codecogs.com/svg.latex?L_f"> |  the distance between the center of mass of the viecle and the its front axle|
+
+### Timestep Length and Elapsed Duration
+I selected time step length N = 10 and elapsed duration dt = 0.10. I read "100 millisecond latency" in [udacity lecture page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/f1820894-8322-4bb3-81aa-b26b3c6dcbaf/lessons/b1ff3be0-c904-438e-aad3-2b5379f0e0c3/concepts/1a2255a0-e23c-44cf-8d41-39b8a3c8264a). So I selected dt = 0.10. And, I changed N between 10-70. I felt N = 10 is enough to solve this project.
+
+### Polynomial Fitting and MPC Preprocessing
+The waypoints are preprocessed to transform them to the coordinate system which origin is car's position and direction.
+Polynomial fitting is used for them.
+
+### Model Predictive Control with Latency
+I used elapsed duration dt = 0.10 which equals the 100 millisecond latency to deal with latency. 
+
 ## Dependencies
 
 * cmake >= 3.5
@@ -112,5 +164,3 @@ that's just a guess.
 One last note here: regardless of the IDE used, every submitted project must
 still be compilable with cmake and make./
 
-## How to write a README
-A well written README file can enhance your project and portfolio and develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
