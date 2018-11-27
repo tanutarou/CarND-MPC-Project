@@ -46,14 +46,16 @@ cte | cross track error|
 <img src="https://latex.codecogs.com/svg.latex?L_f"> |  the distance between the center of mass of the viecle and the its front axle|
 
 ### Timestep Length and Elapsed Duration
-I selected time step length N = 10 and elapsed duration dt = 0.10. I read "100 millisecond latency" in [udacity lecture page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/f1820894-8322-4bb3-81aa-b26b3c6dcbaf/lessons/b1ff3be0-c904-438e-aad3-2b5379f0e0c3/concepts/1a2255a0-e23c-44cf-8d41-39b8a3c8264a). So I selected dt = 0.10. And, I changed N between 10-70. I felt N = 10 is enough to solve this project.
+I selected time step length N = 10 and elapsed duration dt = 0.10. 
+I changed N between 10-70 and dt between 0.10-0.20. The lecture said "T should be as large as possible, while dt should be as small as possible". Because smaller dt gives finer resolution prediction and larger N gives the prediction far away.
+But larger N gives much computational time too. So I selected small dt(0.10) and small N(10). N=10 was enough to solve this project in the case reference velocity is 50mph. 
 
 ### Polynomial Fitting and MPC Preprocessing
 The waypoints are preprocessed to transform them to the coordinate system which origin is car's position and direction.
 Polynomial fitting is used for them.
 
 ### Model Predictive Control with Latency
-I used elapsed duration dt = 0.10 which equals the 100 millisecond latency to deal with latency. 
+I deal with latency in src/main.cpp(L125-134). I used kinematic equations to predict the states for after 100ms and send them to MPC. 
 
 ## Dependencies
 
