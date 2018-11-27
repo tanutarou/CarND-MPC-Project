@@ -120,9 +120,18 @@ int main() {
           const double psi0 = 0;
           const double cte0 = coeffs[0];
           const double epsi0 = -atan(coeffs[1]);
+          const double latency = 0.1;
+
+          // deal with latency
+          const double x1 = x0 + v * cos(psi0) * latency;
+          const double y1 = y0 + v * sin(psi0) * latency;
+          const double psi1 = psi0 - v * delta / mpc.Lf * latency;
+          const double v1 = v + a * latency;
+          const double cte1 = cte0 + v * sin(epsi0) * latency;
+          const double epsi1 = epsi0 - v * delta / mpc.Lf * latency;
 
           Eigen::VectorXd state(6);
-          state << x0, y0, psi0, v, cte0, epsi0;
+          state << x1, y1, psi1, v1, cte1, epsi1;
 
           auto result = mpc.Solve(state, coeffs);
 
